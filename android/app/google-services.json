@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "380472960221",
+    "project_id": "misosirubot-bb1e6",
+    "storage_bucket": "misosirubot-bb1e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380472960221:android:9d922be638fbdf63e8e734",
+        "android_client_info": {
+          "package_name": "com.example.misobot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380472960221-1n3ouvsjvv5sduqbab9os67f5q2rrhqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDD8SOIX7DexQK-5pqW30x1t9Y56fC3Ms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380472960221-1n3ouvsjvv5sduqbab9os67f5q2rrhqu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "380472960221-m32lrpf6uk9u2hdshj7t6olok15qf6rc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.misoshirubot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380472960221:android:2199bcf225b42ea4e8e734",
+        "android_client_info": {
+          "package_name": "com.example.misoshirubot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380472960221-1n3ouvsjvv5sduqbab9os67f5q2rrhqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDD8SOIX7DexQK-5pqW30x1t9Y56fC3Ms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380472960221-1n3ouvsjvv5sduqbab9os67f5q2rrhqu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "380472960221-m32lrpf6uk9u2hdshj7t6olok15qf6rc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.misoshirubot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
