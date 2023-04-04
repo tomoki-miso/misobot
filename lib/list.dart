@@ -32,6 +32,7 @@ class _ListPageState extends State<ListPage>
         bottom: PreferredSize(
             preferredSize: Size.fromHeight(20),
             child: TabBar(
+             
               labelColor: Color.fromRGBO(51, 50, 50, 1),
               controller: _tabController,
               indicatorSize: TabBarIndicatorSize.tab,
@@ -60,60 +61,63 @@ class _ListPageState extends State<ListPage>
               },
             )),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: FirebaseFirestore.instance
-                .collection("list_materials")
-                .orderBy('materials')
-                .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return ListView(
-             
-               shrinkWrap: true,
-                padding: EdgeInsets.only(top: 6),
-                
-                children: snapshot.data!.docs
-                    .map((DocumentSnapshot<Map<String, dynamic>> document) {
-                  return Card(
-                    child: ListTile(
-                      
-                      title: Text(document.data()!['materials']),
-                    ),
-                  );
-                }).toList(),
-              );
-            },
-          ),
-          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: FirebaseFirestore.instance
-                .collection("list_secret")
-                .orderBy('secret')
-                .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return ListView(
-                padding: EdgeInsets.only(top: 6),
-                children: snapshot.data!.docs
-                    .map((DocumentSnapshot<Map<String, dynamic>> document) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(document.data()!['secret']),
-                    ),
-                  );
-                }).toList(),
-              );
-            },
-          ),
-        ],
+      body: SafeArea(
+        child: TabBarView(
+           physics: NeverScrollableScrollPhysics(), 
+          controller: _tabController,
+          children: [
+            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("list_materials")
+                  .orderBy('materials')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ListView(
+               
+                 shrinkWrap: true,
+                  padding: EdgeInsets.only(top: 6),
+                  
+                  children: snapshot.data!.docs
+                      .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                    return Card(
+                      child: ListTile(
+                        
+                        title: Text(document.data()!['materials']),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("list_secret")
+                  .orderBy('secret')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ListView(
+                  padding: EdgeInsets.only(top: 6),
+                  children: snapshot.data!.docs
+                      .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(document.data()!['secret']),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(244, 164, 96, 1),

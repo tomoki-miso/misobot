@@ -130,7 +130,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.mugHot), label: 'みそしるをつくる'),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.bookOpenReader), label: 'お知らせ'),
+            icon: FaIcon(FontAwesomeIcons.bookOpenReader), label: 'おしらせ'),
         ],
         type: BottomNavigationBarType.fixed,
       ),

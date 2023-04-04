@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RandomPage extends StatefulWidget {
   const RandomPage({Key? key}) : super(key: key);
@@ -16,8 +18,6 @@ class _RandomPageState extends State<RandomPage> {
   String secret = '';
 
   @override
-  
-  
   void initState() {
     super.initState();
     _fetchData();
@@ -55,112 +55,126 @@ class _RandomPageState extends State<RandomPage> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
+      appBar: AppBar(
+        title: Text("みそしるをつくる"),
+        actions: [
+        IconButton(
+          icon: FaIcon(FontAwesomeIcons.arrowUpFromBracket,color: Colors.black,),
+          onPressed: () => _share(
+              '今日のみそしるを「みそしるBot」で決めたよ！\n今日のみそしるの具材は${materials.join('と')}で、隠し味は$secretだよ！\n#今日のみそしるbyみそしるBot'),
+        ),
+      ]),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 3),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (materials.isNotEmpty)
-                Column(
-                  children: materials.map((material) {
-                    return Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.13,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          top: 0, bottom: 5, right: 10, left: 10),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(247, 202, 201, 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                         
-                          Text(
-                            "具材",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            material,
-                            style: TextStyle(
-                              fontSize: 30,
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (materials.isNotEmpty)
+                  Column(
+                    children: materials.map((material) {
+                      return Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.13,
+                        width: double.infinity,
+                        margin: EdgeInsets.only(
+                            top: 0, bottom: 5, right: 10, left: 10),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(247, 202, 201, 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "具材",
+                              style: TextStyle(fontSize: 16),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+                            Text(
+                              material,
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                if (secret.isNotEmpty)
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.13,
+                    width: double.infinity,
+                    margin:
+                        EdgeInsets.only(top: 0, bottom: 5, right: 10, left: 10),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 213, 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "隠し味",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          secret,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
-              if (secret.isNotEmpty)
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1, //ここ0.12
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: ElevatedButton(
+                    onPressed: _fetchData,
+                    child: const Text(
+                      'みそしるをつくる',
+                      style: TextStyle(
+                          color: Color.fromRGBO(51, 50, 50, 1), fontSize: 20),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Color.fromRGBO(171, 116, 68, 1),
+                        shape: StadiumBorder(),
+                        side: BorderSide(
+                            color: Color.fromRGBO(243, 155, 79, 1), width: 4),
+                        elevation: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.012,
+                ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.13,
-                  width: double.infinity,
-                  margin:
-                      EdgeInsets.only(top: 0, bottom: 5, right: 10, left: 10),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 213, 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "隠し味",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        secret,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ],
+                  height: MediaQuery.of(context).size.height * 0.04,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: ElevatedButton(
+                    onPressed: _shareOnTwitter,
+                    child: RichText(text: TextSpan(children: [
+                      WidgetSpan(child: FaIcon(FontAwesomeIcons.twitter,size: 16,color: Colors.white)),
+                      WidgetSpan(child: SizedBox(width: 10,),),
+                      TextSpan(text: 'Twitterで共有する',)
+                    ])),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(29, 161, 242, 1),
+                        foregroundColor: Color.fromRGBO(19, 102, 154, 1),
+                        elevation: 10),
                   ),
                 ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.015,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.12,
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: ElevatedButton(
-                  onPressed: _fetchData,
-                  child: const Text(
-                    'みそしるをつくる',
-                    style: TextStyle(
-                        color: Color.fromRGBO(51, 50, 50, 1), fontSize: 20),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Color.fromRGBO(171, 116, 68, 1),
-                      shape: StadiumBorder(),
-                      side: BorderSide(
-                          color: Color.fromRGBO(243, 155, 79, 1), width: 4),
-                      elevation: 20),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.015,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: ElevatedButton(
-                  onPressed: _shareOnTwitter,
-                  child: const Text('Twitterで共有する',
-                      style: TextStyle(color: Colors.white, fontSize: 14)),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(29, 161, 242, 1),
-                      foregroundColor: Color.fromRGBO(19, 102, 154, 1),
-                      elevation: 10),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+void _share(String text) => Share.share(text);
