@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'firebase_options.dart';
 import 'list.dart';
@@ -10,13 +14,49 @@ import 'post.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  // バナー広告を初期化し、読み込む
+  initializeBannerAd();
 
   runApp(
     MyApp(),
   );
+}
+
+BannerAd myBanner = BannerAd(
+  adUnitId: getTestAdBannerUnitId(),
+  size: AdSize.banner,
+  request: const AdRequest(),
+  listener: const BannerAdListener(),
+);
+
+void initializeBannerAd() {
+  // バナー広告をインスタンス化
+  myBanner = BannerAd(
+    adUnitId: getTestAdBannerUnitId(),
+    size: AdSize.banner,
+    request: const AdRequest(),
+    listener: const BannerAdListener(),
+  );
+  // バナー広告の読み込み
+  myBanner.load();
+}
+
+// プラットフォーム（iOS / Android）に合わせてデモ用広告IDを返す
+String getTestAdBannerUnitId() {
+  String testBannerUnitId = "";
+  if (Platform.isAndroid) {
+    // Android のとき
+    testBannerUnitId = "ca-app-pub-3940256099942544/6300978111"; // Androidのデモ用バナー広告ID
+  } else if (Platform.isIOS) {
+    // iOSのとき
+    testBannerUnitId = "ca-app-pub-2209028789060457/4518094197"; // iOSのデモ用バナー広告ID
+  }
+  return testBannerUnitId;
 }
 
 class MyApp extends StatelessWidget {
@@ -49,6 +89,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
 
@@ -74,18 +115,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           Expanded(
             child: _screens[_selectedIndex],
           ),
+          Container(
+            height: 50,
+            child: AdWidget(ad: myBanner)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor:Color.fromRGBO(243, 155, 79, 1) ,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-                icon: Icon(Icons.playlist_add), label: 'リスト'),
+            icon: Icon(Icons.playlist_add), label: 'リスト'),
           BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.mugHot), label: 'みそしるをつくる'),
+            icon: FaIcon(FontAwesomeIcons.mugHot), label: 'みそしるをつくる'),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.bookOpenReader), label: 'お知らせ'),
+            icon: FaIcon(FontAwesomeIcons.bookOpenReader), label: 'お知らせ'),
         ],
         type: BottomNavigationBarType.fixed,
       ),

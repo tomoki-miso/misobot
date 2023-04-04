@@ -99,7 +99,7 @@ class _PostPagePageState extends State<PostPage> {
               Container(
                   margin: EdgeInsets.only(left:  MediaQuery.of(context).size.width * 0.1,),
                  width: MediaQuery.of(context).size.width * 0.3,
-                 height: MediaQuery.of(context).size.height * 0.079,
+                 height: MediaQuery.of(context).size.height * 0.07,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -125,7 +125,6 @@ class _PostPagePageState extends State<PostPage> {
                       },
                     ),
                   )),
-              // ここに他のWidgetを追加する
             ]),
             SizedBox(
              height: MediaQuery.of(context).size.height * 0.015,
