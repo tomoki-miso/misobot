@@ -69,7 +69,7 @@ class _SettingPageState extends State<SettingPage> {
                   child: Column(
                     children: [
                       const Text(
-                        " 世界に誇る和食。\n「みそしる」は和食において、欠かすことの出来ない存在です。日々、みそしるを作り、食べる私たち。その味は優しく、穏やかで、多忙な現代社会で生きる私たちを癒やしてくれます。\n",
+                        " 世界に誇る和食。\n「みそしる」は和食において、欠かすことのできない存在です。日々、みそしるを作り、食べる私たち。その味は優しく、穏やかで、多忙な現代社会で生きる私たちを癒やしてくれます。\n",
                         style: TextStyle(fontSize: 16),
                       ),
                       const Text(
@@ -281,7 +281,7 @@ class _SettingPageState extends State<SettingPage> {
                                   style: TextStyle(fontSize: 14))
                             ]),
                           ),
-                          onPressed: () => _share('Sample Text'),
+                          onPressed: () => _share('「みそしるBot」を使ってみよう！'),
                         ),
                       ),
                       Container(
@@ -333,4 +333,8 @@ Future<void> _openUrl() async {
   }
 }
 
-void _share(String text) => Share.share(text);
+Future<void> _share(String text) async {
+  await Share.share(text,
+      sharePositionOrigin: Rect.fromLTWH(200, 80, 450, 10));
+}
+

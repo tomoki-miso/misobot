@@ -56,11 +56,12 @@ class _RandomPageState extends State<RandomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("みそしるをつくる"),
-        actions: [
+      appBar: AppBar(title: Text("みそしるをつくる"), actions: [
         IconButton(
-          icon: FaIcon(FontAwesomeIcons.arrowUpFromBracket,color: Colors.black,),
+          icon: FaIcon(
+            FontAwesomeIcons.arrowUpFromBracket,
+            color: Colors.black,
+          ),
           onPressed: () => _share(
               '今日のみそしるを「みそしるBot」で決めたよ！\n今日のみそしるの具材は${materials.join('と')}で、隠し味は$secretだよ！\n#今日のみそしるbyみそしるBot'),
         ),
@@ -157,10 +158,19 @@ class _RandomPageState extends State<RandomPage> {
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: ElevatedButton(
                     onPressed: _shareOnTwitter,
-                    child: RichText(text: TextSpan(children: [
-                      WidgetSpan(child: FaIcon(FontAwesomeIcons.twitter,size: 16,color: Colors.white)),
-                      WidgetSpan(child: SizedBox(width: 10,),),
-                      TextSpan(text: 'Twitterで共有する',)
+                    child: RichText(
+                        text: TextSpan(children: [
+                      WidgetSpan(
+                          child: FaIcon(FontAwesomeIcons.twitter,
+                              size: 16, color: Colors.white)),
+                      WidgetSpan(
+                        child: SizedBox(
+                          width: 10,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Twitterで共有する',
+                      )
                     ])),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(29, 161, 242, 1),
@@ -177,4 +187,7 @@ class _RandomPageState extends State<RandomPage> {
   }
 }
 
-void _share(String text) => Share.share(text);
+Future<void> _share(String text) async {
+  await Share.share(text,
+      sharePositionOrigin: Rect.fromLTWH(200, 80, 450, 10));
+}
