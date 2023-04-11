@@ -99,7 +99,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  static final _screens = [ListPage(), RandomPage(), SettingPage()];
+  static final _screens = [const ListPage(), const RandomPage(), SettingPage()];
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
