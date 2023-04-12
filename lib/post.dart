@@ -100,7 +100,7 @@ class _PostPagePageState extends State<PostPage> {
                 Container(
                     margin: EdgeInsets.only(left:  MediaQuery.of(context).size.width * 0.1,),
                    width: MediaQuery.of(context).size.width * 0.3,
-                   height: MediaQuery.of(context).size.height * 0.07,
+                   height: 65,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),

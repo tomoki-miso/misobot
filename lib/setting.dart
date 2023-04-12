@@ -281,7 +281,7 @@ class _SettingPageState extends State<SettingPage> {
                                   style: TextStyle(fontSize: 14))
                             ]),
                           ),
-                          onPressed: () => _share('「みそしるBot」を使ってみよう！'),
+                          onPressed: () => _share('「みそしるBot」を使ってみよう！\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
                         ),
                       ),
                       Container(
