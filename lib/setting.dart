@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:math';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -16,10 +18,15 @@ class _SettingPageState extends State<SettingPage> {
   late BannerAd _ad;
   bool _isAdLoaded = false;
   late final Uri _url;
+  final List<String> _phrases = [];
+  String _currentPhrase = "";
 
   @override
   void initState() {
     super.initState();
+    _fetchData().then((_) {
+      _generateRandomPhrase();
+    });
     _ad = BannerAd(
       size: AdSize.mediumRectangle,
       adUnitId: 'ca-app-pub-2209028789060457/1632872561',
@@ -34,6 +41,26 @@ class _SettingPageState extends State<SettingPage> {
         onAdClosed: (ad) => ad.dispose(),
       ),
     )..load();
+  }
+
+  Future<void> _fetchData() async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('trivias').get();
+    for (final doc in snapshot.docs) {
+      final phrase = doc.data()['trivia'] as String;
+      _phrases.add(phrase);
+    }
+  }
+
+  void _generateRandomPhrase() {
+    if (_phrases.isEmpty) {
+      return;
+    }
+    final random = Random();
+    final phraseIndex = random.nextInt(_phrases.length);
+    setState(() {
+      _currentPhrase = _phrases[phraseIndex];
+    });
   }
 
   @override
@@ -184,7 +211,7 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             Flexible(
                                 child: Text(
-                              "このページだよ！\n「このアプリについて」と「つかいかた」が読めるよ！",
+                              "このページだよ！\n「このアプリについて」と「つかいかた」、「みそしるのひみつ」が読めるよ！",
                               style: TextStyle(fontSize: 16),
                             )),
                             SizedBox(
@@ -197,7 +224,88 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
               ),
-
+              SizedBox(
+                height: MediaQuery.of(context).size.width * 0.04,
+              ),
+              Container(
+                  padding: EdgeInsets.only(left: 24),
+                  alignment: Alignment.centerLeft,
+                  width: double.infinity,
+                  child: Text(
+                    "みそしるのひみつ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  )),
+              Container(
+                padding:
+                    EdgeInsets.only(top: 14, left: 18, right: 18, bottom: 14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromRGBO(247, 202, 201, 0.6),
+                ),
+                width: MediaQuery.of(context).size.width * 0.96,
+                child: Column(
+                  children: [
+                    Text("※諸説ありまくります"),
+                    Padding(
+                        padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.04,
+                    )),
+                    Text(
+                      "$_currentPhraseらしいよ。しらんけど。",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.04,
+                    )),
+                    Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _generateRandomPhrase,
+                        child: Text(
+                          "もっとみる！",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(243, 155, 79, 1),
+                            foregroundColor: Color.fromRGBO(171, 116, 68, 1),
+                            elevation: 10),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(243, 155, 79, 1),
+                            foregroundColor: Color.fromRGBO(171, 116, 68, 1),
+                            elevation: 10),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            WidgetSpan(
+                              child: FaIcon(
+                                FontAwesomeIcons.arrowUpFromBracket,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                            WidgetSpan(
+                                child: SizedBox(
+                              width: 10,
+                            )),
+                            TextSpan(
+                                text: 'みそしるのひみつをおしえる',
+                                style: TextStyle(fontSize: 14))
+                          ]),
+                        ),
+                        onPressed: () => _share(
+                            '$_currentPhraseらしいよ。しらんけど。(※諸説ありまくります)\nみそしるのひみつbyみそしるBot\n#みそしるBot'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.04,
               ),
@@ -219,7 +327,6 @@ class _SettingPageState extends State<SettingPage> {
                 width: MediaQuery.of(context).size.width * 0.96,
                 child: Column(
                   children: [
-                    Text("たくさんタップしてね！"),
                     SizedBox(
                       height: 20,
                     ),
@@ -233,7 +340,6 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
               ),
-              // 以前のコードをここに入力
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.04,
               ),
@@ -259,8 +365,7 @@ class _SettingPageState extends State<SettingPage> {
                         width: MediaQuery.of(context).size.width * 0.96,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromRGBO(243, 155, 79, 1),
+                              backgroundColor: Color.fromRGBO(243, 155, 79, 1),
                               foregroundColor: Color.fromRGBO(171, 116, 68, 1),
                               elevation: 10),
                           child: RichText(
@@ -281,7 +386,8 @@ class _SettingPageState extends State<SettingPage> {
                                   style: TextStyle(fontSize: 14))
                             ]),
                           ),
-                          onPressed: () => _share('「みそしるBot」を使ってみよう！\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
+                          onPressed: () => _share(
+                              '「みそしるBot」を使ってみよう！\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
                         ),
                       ),
                       Container(
@@ -334,7 +440,5 @@ Future<void> _openUrl() async {
 }
 
 Future<void> _share(String text) async {
-  await Share.share(text,
-      sharePositionOrigin: Rect.fromLTWH(200, 80, 450, 10));
+  await Share.share(text, sharePositionOrigin: Rect.fromLTWH(200, 80, 450, 10));
 }
-

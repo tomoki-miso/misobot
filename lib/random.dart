@@ -63,7 +63,7 @@ class _RandomPageState extends State<RandomPage> {
             color: Colors.black,
           ),
           onPressed: () => _share(
-              '今日のみそしるを「みそしるBot」で決めたよ！\n今日のみそしるの具材は${materials.join('と')}で、隠し味は$secretだよ！\n#今日のみそしるbyみそしるBot'),
+              '今日のみそしるを「みそしるBot」で決めたよ！\n今日のみそしるの具材は${materials.join('と')}で、隠し味は$secretだよ！\n#今日のみそしるbyみそしるBot\n#みそしるBot'),
         ),
       ]),
       body: SafeArea(
