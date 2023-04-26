@@ -300,7 +300,7 @@ class _SettingPageState extends State<SettingPage> {
                           ]),
                         ),
                         onPressed: () => _share(
-                            '$_currentPhraseらしいよ。しらんけど。(※諸説ありまくります)\nみそしるのひみつbyみそしるBot\n#みそしるBot'),
+                            '$_currentPhraseらしいよ。しらんけど。(※諸説ありまくります)\n#みそしるのひみつbyみそしるBot\n#みそしるBot'),
                       ),
                     ),
                   ],
@@ -387,7 +387,7 @@ class _SettingPageState extends State<SettingPage> {
                             ]),
                           ),
                           onPressed: () => _share(
-                              '「みそしるBot」を使ってみよう！\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
+                              '「みそしるBot」を使ってみよう！\n#みそしるBot\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
                         ),
                       ),
                       Container(
