@@ -274,6 +274,7 @@ class _SettingPageState extends State<SettingPage> {
                             elevation: 10),
                       ),
                     ),
+                    Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01)),
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -390,6 +391,7 @@ class _SettingPageState extends State<SettingPage> {
                               '「みそしるBot」を使ってみよう！\n#みそしるBot\nhttps://apps.apple.com/jp/app/%E3%81%BF%E3%81%9D%E3%81%97%E3%82%8Bbot/id6447541935?platform=iphone'),
                         ),
                       ),
+                      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01)),
                       Container(
                         width: double.infinity,
                         child: ElevatedButton(
