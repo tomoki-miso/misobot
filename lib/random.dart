@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:social_share/social_share.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RandomPage extends StatefulWidget {
@@ -47,11 +46,12 @@ class _RandomPageState extends State<RandomPage> {
     setState(() {});
   }
 
-  Future<void> _shareOnTwitter() async {
+ /*  Future<void> _shareOnTwitter() async {
     final message =
         '今日のみそしるを「みそしるBot」で決めたよ！\n今日のみそしるの具材は${materials.join('と')}で、隠し味は$secretだよ！\n#今日のみそしるbyみそしるBot';
     await SocialShare.shareTwitter(message);
   }
+ */
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +157,7 @@ class _RandomPageState extends State<RandomPage> {
                   height: MediaQuery.of(context).size.height * 0.04,
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: ElevatedButton(
-                    onPressed: _shareOnTwitter,
+                    onPressed: (){}/* _shareOnTwitter */,
                     child: RichText(
                         text: TextSpan(children: [
                       WidgetSpan(

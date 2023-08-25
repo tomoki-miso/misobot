@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math';
 
@@ -15,7 +14,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  late BannerAd _ad;
+  //late BannerAd _ad;
   bool _isAdLoaded = false;
   late final Uri _url;
   final List<String> _phrases = [];
@@ -27,7 +26,7 @@ class _SettingPageState extends State<SettingPage> {
     _fetchData().then((_) {
       _generateRandomPhrase();
     });
-    _ad = BannerAd(
+    /* _ad = BannerAd(
       size: AdSize.mediumRectangle,
       adUnitId: 'ca-app-pub-2209028789060457/1632872561',
       request: AdRequest(),
@@ -40,7 +39,7 @@ class _SettingPageState extends State<SettingPage> {
         onAdFailedToLoad: (ad, error) => ad.dispose(),
         onAdClosed: (ad) => ad.dispose(),
       ),
-    )..load();
+    )..load(); */
   }
 
   Future<void> _fetchData() async {
@@ -333,9 +332,10 @@ class _SettingPageState extends State<SettingPage> {
                     if (_isAdLoaded)
                       Container(
                         alignment: Alignment.center,
-                        child: AdWidget(ad: _ad),
+                        child: Text("ad"),
+                        /* child: AdWidget(ad: _ad),
                         width: _ad.size.width.toDouble(),
-                        height: _ad.size.height.toDouble(),
+                        height: _ad.size.height.toDouble(), */
                       ),
                   ],
                 ),

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+
 
 import 'firebase_options.dart';
 import 'list.dart';
@@ -15,27 +15,27 @@ import 'postTrivia.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  //MobileAds.instance.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   // バナー広告を初期化し、読み込む
-  initializeBannerAd();
+  //initializeBannerAd();
 
   runApp(
     MyApp(),
   );
 }
 
-BannerAd myBanner = BannerAd(
+/* BannerAd myBanner = BannerAd(
   adUnitId: getTestAdBannerUnitId(),
   size: AdSize.banner,
   request: const AdRequest(),
   listener: const BannerAdListener(),
-);
+); */
 
-void initializeBannerAd() {
+/* void initializeBannerAd() {
   // バナー広告をインスタンス化
   myBanner = BannerAd(
     adUnitId: getTestAdBannerUnitId(),
@@ -45,7 +45,7 @@ void initializeBannerAd() {
   );
   // バナー広告の読み込み
   myBanner.load();
-}
+} */
 
 // プラットフォーム（iOS / Android）に合わせてデモ用広告IDを返す
 String getTestAdBannerUnitId() {
@@ -103,11 +103,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    initPlugin();
+    //initPlugin();
   }
 
  
-  Future<void> initPlugin() async {
+  /* Future<void> initPlugin() async {
     final TrackingStatus status =
         await AppTrackingTransparency.trackingAuthorizationStatus;
     setState(() => _authStatus = '$status');
@@ -121,7 +121,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
     final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
     print("UUID: $uuid");
-  }
+  } */
 
  
 
@@ -139,7 +139,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           Expanded(
             child: _screens[_selectedIndex],
           ),
-          Container(height: 50, child: AdWidget(ad: myBanner)),
+          Container(height: 50, child:Text("ad") )//AdWidget(ad: myBanner)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
